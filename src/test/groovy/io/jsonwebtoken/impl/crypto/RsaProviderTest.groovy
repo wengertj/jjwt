@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto
 
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import io.jsonwebtoken.SignatureException
 
 import java.security.InvalidAlgorithmParameterException
@@ -51,7 +51,7 @@ class RsaProviderTest {
     @Test
     void testCreateSignatureInstanceWithInvalidPSSParameterSpecAlgorithm() {
 
-        def p = new RsaProvider(SignatureAlgorithm.PS256, RsaProvider.generateKeyPair(512).public) {
+        def p = new RsaProvider(SignatureAlgorithmName.PS256, RsaProvider.generateKeyPair(512).public) {
             @Override
             protected void doSetParameter(Signature sig, PSSParameterSpec spec) throws InvalidAlgorithmParameterException {
                 throw new InvalidAlgorithmParameterException('foo')

@@ -15,11 +15,11 @@
  */
 package io.jsonwebtoken.impl.crypto;
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 
 import java.security.Key;
 
 public interface SignerFactory {
 
-    Signer createSigner(SignatureAlgorithm alg, Key key);
+    Signer createSigner(SignatureAlgorithmName alg, Key key);
 }

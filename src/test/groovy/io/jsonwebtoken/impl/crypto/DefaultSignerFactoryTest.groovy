@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto
 
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import org.junit.Test
 import static org.junit.Assert.*
 
@@ -27,7 +27,7 @@ class DefaultSignerFactoryTest {
         def factory = new DefaultSignerFactory();
 
         try {
-            factory.createSigner(SignatureAlgorithm.NONE, MacProvider.generateKey());
+            factory.createSigner(SignatureAlgorithmName.NONE, MacProvider.generateKey());
             fail();
         } catch (IllegalArgumentException iae) {
             assertEquals iae.message, "The 'NONE' algorithm cannot be used for signing."

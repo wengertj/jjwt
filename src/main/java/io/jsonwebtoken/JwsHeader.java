@@ -55,7 +55,7 @@ public interface JwsHeader<T extends JwsHeader<T>> extends Header<T> {
      * <code>alg</code></a> (algorithm) header value or {@code null} if not present.
      *
      * <p>The algorithm header parameter identifies the cryptographic algorithm used to secure the JWS.  Consider
-     * using {@link io.jsonwebtoken.SignatureAlgorithm#forName(String) SignatureAlgorithm.forName} to convert this
+     * using {@link SignatureAlgorithmName#forName(String) SignatureAlgorithmName.forName} to convert this
      * string value to a type-safe enum instance.</p>
      *
      * @return the JWS {@code alg} header value or {@code null} if not present.  This will always be
@@ -68,8 +68,8 @@ public interface JwsHeader<T extends JwsHeader<T>> extends Header<T> {
      * <code>alg</code></a> (Algorithm) header value.  A {@code null} value will remove the property from the JSON map.
      *
      * <p>The algorithm header parameter identifies the cryptographic algorithm used to secure the JWS.  Consider
-     * using a type-safe {@link io.jsonwebtoken.SignatureAlgorithm SignatureAlgorithm} instance and using its
-     * {@link io.jsonwebtoken.SignatureAlgorithm#getValue() value} as the argument to this method.</p>
+     * using a type-safe {@link SignatureAlgorithmName SignatureAlgorithmName} instance and using its
+     * {@link SignatureAlgorithmName#getValue() value} as the argument to this method.</p>
      *
      * @param alg the JWS {@code alg} header value or {@code null} to remove the property from the JSON map.
      * @return the {@code Header} instance for method chaining.

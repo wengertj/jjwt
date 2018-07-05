@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto;
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.SignatureException;
 
 import java.security.InvalidKeyException;
@@ -26,7 +26,7 @@ import java.security.interfaces.RSAKey;
 
 public class RsaSigner extends RsaProvider implements Signer {
 
-    public RsaSigner(SignatureAlgorithm alg, Key key) {
+    public RsaSigner(SignatureAlgorithmName alg, Key key) {
         super(alg, key);
         // https://github.com/jwtk/jjwt/issues/68
         // Instead of checking for an instance of RSAPrivateKey, check for PrivateKey and RSAKey:

@@ -18,7 +18,7 @@ package io.jsonwebtoken.impl
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.JsonMappingException
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import io.jsonwebtoken.impl.compression.CompressionCodecs
 import io.jsonwebtoken.impl.crypto.MacProvider
 import org.junit.Test
@@ -169,8 +169,8 @@ class DefaultJwtBuilderTest {
         def b = new DefaultJwtBuilder()
         b.setPayload('foo')
         def key = MacProvider.generateKey()
-        b.signWith(SignatureAlgorithm.HS256, key)
-        b.signWith(SignatureAlgorithm.HS256, key.encoded)
+        b.signWith(SignatureAlgorithmName.HS256, key)
+        b.signWith(SignatureAlgorithmName.HS256, key.encoded)
         try {
             b.compact()
             fail()
@@ -185,7 +185,7 @@ class DefaultJwtBuilderTest {
         b.setHeader(Jwts.jwsHeader().setKeyId('a'))
         b.setPayload('foo')
         def key = MacProvider.generateKey()
-        b.signWith(SignatureAlgorithm.HS256, key)
+        b.signWith(SignatureAlgorithmName.HS256, key)
         b.compact()
     }
 
@@ -232,20 +232,20 @@ class DefaultJwtBuilderTest {
     void testSignWithBytesWithoutHmac() {
         def bytes = new byte[16];
         try {
-            new DefaultJwtBuilder().signWith(SignatureAlgorithm.ES256, bytes);
+            new DefaultJwtBuilder().signWith(SignatureAlgorithmName.ES256, bytes);
             fail()
         } catch (IllegalArgumentException iae) {
-            assertEquals "Key bytes may only be specified for HMAC signatures.  If using RSA or Elliptic Curve, use the signWith(SignatureAlgorithm, Key) method instead.", iae.message
+            assertEquals "Key bytes may only be specified for HMAC signatures.  If using RSA or Elliptic Curve, use the signWith(SignatureAlgorithmName, Key) method instead.", iae.message
         }
     }
 
     @Test
     void testSignWithBase64EncodedBytesWithoutHmac() {
         try {
-            new DefaultJwtBuilder().signWith(SignatureAlgorithm.ES256, 'foo');
+            new DefaultJwtBuilder().signWith(SignatureAlgorithmName.ES256, 'foo');
             fail()
         } catch (IllegalArgumentException iae) {
-            assertEquals "Base64-encoded key bytes may only be specified for HMAC signatures.  If using RSA or Elliptic Curve, use the signWith(SignatureAlgorithm, Key) method instead.", iae.message
+            assertEquals "Base64-encoded key bytes may only be specified for HMAC signatures.  If using RSA or Elliptic Curve, use the signWith(SignatureAlgorithmName, Key) method instead.", iae.message
         }
 
     }

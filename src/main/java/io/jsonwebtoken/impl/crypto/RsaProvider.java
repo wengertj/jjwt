@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto;
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.lang.Assert;
 
@@ -33,30 +33,30 @@ import java.util.Map;
 
 public abstract class RsaProvider extends SignatureProvider {
 
-    private static final Map<SignatureAlgorithm, PSSParameterSpec> PSS_PARAMETER_SPECS = createPssParameterSpecs();
+    private static final Map<SignatureAlgorithmName, PSSParameterSpec> PSS_PARAMETER_SPECS = createPssParameterSpecs();
 
-    private static Map<SignatureAlgorithm, PSSParameterSpec> createPssParameterSpecs() {
+    private static Map<SignatureAlgorithmName, PSSParameterSpec> createPssParameterSpecs() {
 
-        Map<SignatureAlgorithm, PSSParameterSpec> m = new HashMap<SignatureAlgorithm, PSSParameterSpec>();
+        Map<SignatureAlgorithmName, PSSParameterSpec> m = new HashMap<SignatureAlgorithmName, PSSParameterSpec>();
 
         MGF1ParameterSpec ps = MGF1ParameterSpec.SHA256;
         PSSParameterSpec spec = new PSSParameterSpec(ps.getDigestAlgorithm(), "MGF1", ps, 32, 1);
-        m.put(SignatureAlgorithm.PS256, spec);
+        m.put(SignatureAlgorithmName.PS256, spec);
 
         ps = MGF1ParameterSpec.SHA384;
         spec = new PSSParameterSpec(ps.getDigestAlgorithm(), "MGF1", ps, 48, 1);
-        m.put(SignatureAlgorithm.PS384, spec);
+        m.put(SignatureAlgorithmName.PS384, spec);
 
         ps = MGF1ParameterSpec.SHA512;
         spec = new PSSParameterSpec(ps.getDigestAlgorithm(), "MGF1", ps, 64, 1);
-        m.put(SignatureAlgorithm.PS512, spec);
+        m.put(SignatureAlgorithmName.PS512, spec);
 
         return m;
     }
 
-    protected RsaProvider(SignatureAlgorithm alg, Key key) {
+    protected RsaProvider(SignatureAlgorithmName alg, Key key) {
         super(alg, key);
-        Assert.isTrue(alg.isRsa(), "SignatureAlgorithm must be an RSASSA or RSASSA-PSS algorithm.");
+        Assert.isTrue(alg.isRsa(), "SignatureAlgorithmName must be an RSASSA or RSASSA-PSS algorithm.");
     }
 
     protected Signature createSignatureInstance() {

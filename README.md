@@ -88,7 +88,7 @@ Most complexity is hidden behind a convenient and readable builder-based [fluent
 
 ```java
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import java.security.Key;
 

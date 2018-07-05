@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto
 
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import org.junit.Test
 
 import java.security.KeyPair
@@ -38,7 +38,7 @@ class EllipticCurveProviderTest {
     @Test
     void testGenerateKeyPairWithInvalidProviderName() {
         try {
-            EllipticCurveProvider.generateKeyPair("ECDSA", "Foo", SignatureAlgorithm.ES256, null)
+            EllipticCurveProvider.generateKeyPair("ECDSA", "Foo", SignatureAlgorithmName.ES256, null)
             fail()
         } catch (IllegalStateException ise) {
             assertEquals ise.message, "Unable to generate Elliptic Curve KeyPair: no such provider: Foo"
@@ -52,17 +52,17 @@ class EllipticCurveProviderTest {
             EllipticCurveProvider.generateKeyPair("ECDSA", "Foo", null, null)
             fail()
         } catch (IllegalArgumentException ise) {
-            assertEquals ise.message, "SignatureAlgorithm argument cannot be null."
+            assertEquals ise.message, "SignatureAlgorithmName argument cannot be null."
         }
     }
 
     @Test
     void testGenerateKeyPairWithNonEllipticCurveAlgorithm() {
         try {
-            EllipticCurveProvider.generateKeyPair("ECDSA", "Foo", SignatureAlgorithm.HS256, null)
+            EllipticCurveProvider.generateKeyPair("ECDSA", "Foo", SignatureAlgorithmName.HS256, null)
             fail()
         } catch (IllegalArgumentException ise) {
-            assertEquals ise.message, "SignatureAlgorithm argument must represent an Elliptic Curve algorithm."
+            assertEquals ise.message, "SignatureAlgorithmName argument must represent an Elliptic Curve algorithm."
         }
     }
 }

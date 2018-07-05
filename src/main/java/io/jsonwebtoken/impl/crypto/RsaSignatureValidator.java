@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto;
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.lang.Assert;
 
@@ -31,7 +31,7 @@ public class RsaSignatureValidator extends RsaProvider implements SignatureValid
 
     private final RsaSigner SIGNER;
 
-    public RsaSignatureValidator(SignatureAlgorithm alg, Key key) {
+    public RsaSignatureValidator(SignatureAlgorithmName alg, Key key) {
         super(alg, key);
         Assert.isTrue(key instanceof RSAPrivateKey || key instanceof RSAPublicKey,
                       "RSA Signature validation requires either a RSAPublicKey or RSAPrivateKey instance.");

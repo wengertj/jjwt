@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto;
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.lang.Assert;
 
 import java.security.Key;
@@ -25,8 +25,8 @@ public class DefaultSignatureValidatorFactory implements SignatureValidatorFacto
     public static final SignatureValidatorFactory INSTANCE = new DefaultSignatureValidatorFactory();
 
     @Override
-    public SignatureValidator createSignatureValidator(SignatureAlgorithm alg, Key key) {
-        Assert.notNull(alg, "SignatureAlgorithm cannot be null.");
+    public SignatureValidator createSignatureValidator(SignatureAlgorithmName alg, Key key) {
+        Assert.notNull(alg, "SignatureAlgorithmName cannot be null.");
         Assert.notNull(key, "Signing Key cannot be null.");
 
         switch (alg) {

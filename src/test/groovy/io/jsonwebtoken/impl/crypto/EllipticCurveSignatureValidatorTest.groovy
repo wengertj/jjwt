@@ -16,7 +16,7 @@
 package io.jsonwebtoken.impl.crypto
 
 import io.jsonwebtoken.JwtException
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import io.jsonwebtoken.SignatureException
 import io.jsonwebtoken.impl.TextCodec
 import org.bouncycastle.jce.provider.BouncyCastleProvider
@@ -39,7 +39,7 @@ class EllipticCurveSignatureValidatorTest {
         String msg = 'foo'
         final InvalidKeyException ex = new InvalidKeyException(msg)
 
-        def v = new EllipticCurveSignatureValidator(SignatureAlgorithm.ES512, EllipticCurveProvider.generateKeyPair().public) {
+        def v = new EllipticCurveSignatureValidator(SignatureAlgorithmName.ES512, EllipticCurveProvider.generateKeyPair().public) {
             @Override
             protected boolean doVerify(Signature sig, PublicKey pk, byte[] data, byte[] signature) throws InvalidKeyException, java.security.SignatureException {
                 throw ex;
@@ -65,7 +65,7 @@ class EllipticCurveSignatureValidatorTest {
         def fact = KeyFactory.getInstance("ECDSA", "BC");
         def publicKey = "MIGbMBAGByqGSM49AgEGBSuBBAAjA4GGAAQASisgweVL1tAtIvfmpoqvdXF8sPKTV9YTKNxBwkdkm+/auh4pR8TbaIfsEzcsGUVv61DFNFXb0ozJfurQ59G2XcgAn3vROlSSnpbIvuhKrzL5jwWDTaYa5tVF1Zjwia/5HUhKBkcPuWGXg05nMjWhZfCuEetzMLoGcHmtvabugFrqsAg="
         def pub = fact.generatePublic(new X509EncodedKeySpec(TextCodec.BASE64.decode(publicKey)))
-        def v = new EllipticCurveSignatureValidator(SignatureAlgorithm.ES512, pub)
+        def v = new EllipticCurveSignatureValidator(SignatureAlgorithmName.ES512, pub)
         def verifier = { token ->
             def signatureStart = token.lastIndexOf('.')
             def withoutSignature = token.substring(0, signatureStart)
@@ -82,17 +82,17 @@ class EllipticCurveSignatureValidatorTest {
     void legacySignatureCompatTest() {
         def withoutSignature = "eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0IjoidGVzdCIsImlhdCI6MTQ2NzA2NTgyN30"
         def keypair = EllipticCurveProvider.generateKeyPair()
-        def signature = Signature.getInstance(SignatureAlgorithm.ES512.jcaName, "BC")
+        def signature = Signature.getInstance(SignatureAlgorithmName.ES512.jcaName, "BC")
         def data = withoutSignature.getBytes("US-ASCII")
         signature.initSign(keypair.private)
         signature.update(data)
         def signed = signature.sign()
-        assert new EllipticCurveSignatureValidator(SignatureAlgorithm.ES512, keypair.public).isValid(data, signed)
+        assert new EllipticCurveSignatureValidator(SignatureAlgorithmName.ES512, keypair.public).isValid(data, signed)
     }
 
     @Test
     void invalidAlgorithmTest() {
-        def invalidAlgorithm = SignatureAlgorithm.HS256
+        def invalidAlgorithm = SignatureAlgorithmName.HS256
         try {
             EllipticCurveProvider.getSignatureByteArrayLength(invalidAlgorithm)
             fail()
@@ -189,7 +189,7 @@ class EllipticCurveSignatureValidatorTest {
 
     @Test
     void verifySwarmTest() {
-        for (SignatureAlgorithm algorithm : [SignatureAlgorithm.ES256, SignatureAlgorithm.ES384, SignatureAlgorithm.ES512]) {
+        for (SignatureAlgorithmName algorithm : [SignatureAlgorithmName.ES256, SignatureAlgorithmName.ES384, SignatureAlgorithmName.ES512]) {
             int i = 0
             while(i < 10) {
                 i++

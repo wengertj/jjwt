@@ -18,7 +18,7 @@ package io.jsonwebtoken
 import org.junit.Test
 import static org.junit.Assert.*
 
-class SignatureAlgorithmTest {
+class SignatureAlgorithmNameTest {
 
     @Test
     void testNames() {
@@ -31,20 +31,20 @@ class SignatureAlgorithmTest {
     }
 
     private static void testName(String name) {
-        def alg = SignatureAlgorithm.forName(name);
-        def namedAlg = name as SignatureAlgorithm //Groovy type coercion FTW!
+        def alg = SignatureAlgorithmName.forName(name);
+        def namedAlg = name as SignatureAlgorithmName //Groovy type coercion FTW!
         assertTrue alg == namedAlg
         assert alg.description != null && alg.description != ""
     }
 
     @Test(expected = SignatureException)
     void testUnrecognizedAlgorithmName() {
-        SignatureAlgorithm.forName('whatever')
+        SignatureAlgorithmName.forName('whatever')
     }
 
     @Test
     void testIsHmac() {
-        for(SignatureAlgorithm alg : SignatureAlgorithm.values()) {
+        for(SignatureAlgorithmName alg : SignatureAlgorithmName.values()) {
             if (alg.name().startsWith("HS")) {
                 assertTrue alg.isHmac()
             } else {
@@ -55,7 +55,7 @@ class SignatureAlgorithmTest {
 
     @Test
     void testHmacFamilyName() {
-        for(SignatureAlgorithm alg : SignatureAlgorithm.values()) {
+        for(SignatureAlgorithmName alg : SignatureAlgorithmName.values()) {
             if (alg.name().startsWith("HS")) {
                 assertEquals alg.getFamilyName(), "HMAC"
             }
@@ -64,7 +64,7 @@ class SignatureAlgorithmTest {
 
     @Test
     void testIsRsa() {
-        for(SignatureAlgorithm alg : SignatureAlgorithm.values()) {
+        for(SignatureAlgorithmName alg : SignatureAlgorithmName.values()) {
             if (alg.getDescription().startsWith("RSASSA")) {
                 assertTrue alg.isRsa()
             } else {
@@ -75,7 +75,7 @@ class SignatureAlgorithmTest {
 
     @Test
     void testRsaFamilyName() {
-        for(SignatureAlgorithm alg : SignatureAlgorithm.values()) {
+        for(SignatureAlgorithmName alg : SignatureAlgorithmName.values()) {
             if (alg.name().startsWith("RS") || alg.name().startsWith("PS")) {
                 assertEquals alg.getFamilyName(), "RSA"
             }
@@ -84,7 +84,7 @@ class SignatureAlgorithmTest {
 
     @Test
     void testIsEllipticCurve() {
-        for(SignatureAlgorithm alg : SignatureAlgorithm.values()) {
+        for(SignatureAlgorithmName alg : SignatureAlgorithmName.values()) {
             if (alg.name().startsWith("ES")) {
                 assertTrue alg.isEllipticCurve()
             } else {
@@ -95,7 +95,7 @@ class SignatureAlgorithmTest {
 
     @Test
     void testEllipticCurveFamilyName() {
-        for(SignatureAlgorithm alg : SignatureAlgorithm.values()) {
+        for(SignatureAlgorithmName alg : SignatureAlgorithmName.values()) {
             if (alg.name().startsWith("ES")) {
                 assertEquals alg.getFamilyName(), "Elliptic Curve"
             }
@@ -104,8 +104,8 @@ class SignatureAlgorithmTest {
 
     @Test
     void testIsJdkStandard() {
-        for(SignatureAlgorithm alg : SignatureAlgorithm.values()) {
-            if (alg.name().startsWith("ES") || alg.name().startsWith("PS") || alg == SignatureAlgorithm.NONE) {
+        for(SignatureAlgorithmName alg : SignatureAlgorithmName.values()) {
+            if (alg.name().startsWith("ES") || alg.name().startsWith("PS") || alg == SignatureAlgorithmName.NONE) {
                 assertFalse alg.isJdkStandard()
             } else {
                 assertTrue alg.isJdkStandard()

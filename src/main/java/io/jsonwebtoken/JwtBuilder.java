@@ -337,20 +337,20 @@ public interface JwtBuilder extends ClaimsMutator<JwtBuilder> {
      * @param secretKey the algorithm-specific signing key to use to digitally sign the JWT.
      * @return the builder for method chaining.
      */
-    JwtBuilder signWith(SignatureAlgorithm alg, byte[] secretKey);
+    JwtBuilder signWith(SignatureAlgorithmName alg, byte[] secretKey);
 
     /**
      * Signs the constructed JWT using the specified algorithm with the specified key, producing a JWS.
      *
      * <p>This is a convenience method: the string argument is first BASE64-decoded to a byte array and this resulting
-     * byte array is used to invoke {@link #signWith(SignatureAlgorithm, byte[])}.</p>
+     * byte array is used to invoke {@link #signWith(SignatureAlgorithmName, byte[])}.</p>
      *
      * @param alg                    the JWS algorithm to use to digitally sign the JWT, thereby producing a JWS.
      * @param base64EncodedSecretKey the BASE64-encoded algorithm-specific signing key to use to digitally sign the
      *                               JWT.
      * @return the builder for method chaining.
      */
-    JwtBuilder signWith(SignatureAlgorithm alg, String base64EncodedSecretKey);
+    JwtBuilder signWith(SignatureAlgorithmName alg, String base64EncodedSecretKey);
 
     /**
      * Signs the constructed JWT using the specified algorithm with the specified key, producing a JWS.
@@ -359,7 +359,7 @@ public interface JwtBuilder extends ClaimsMutator<JwtBuilder> {
      * @param key the algorithm-specific signing key to use to digitally sign the JWT.
      * @return the builder for method chaining.
      */
-    JwtBuilder signWith(SignatureAlgorithm alg, Key key);
+    JwtBuilder signWith(SignatureAlgorithmName alg, Key key);
 
     /**
      * Compresses the JWT body using the specified {@link CompressionCodec}.

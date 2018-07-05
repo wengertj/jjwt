@@ -20,15 +20,14 @@ import java.security.Key;
 import java.security.PrivateKey;
 import java.security.Signature;
 import java.security.interfaces.ECKey;
-import java.security.interfaces.ECPrivateKey;
 
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.SignatureException;
 
 public class EllipticCurveSigner extends EllipticCurveProvider implements Signer {
 
-    public EllipticCurveSigner(SignatureAlgorithm alg, Key key) {
+    public EllipticCurveSigner(SignatureAlgorithmName alg, Key key) {
         super(alg, key);
         if (!(key instanceof PrivateKey && key instanceof ECKey)) {
             String msg = "Elliptic Curve signatures must be computed using an EC PrivateKey.  The specified key of " +

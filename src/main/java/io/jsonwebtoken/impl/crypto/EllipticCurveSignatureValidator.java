@@ -21,7 +21,7 @@ import java.security.PublicKey;
 import java.security.Signature;
 import java.security.interfaces.ECPublicKey;
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.lang.Assert;
 
@@ -30,7 +30,7 @@ public class EllipticCurveSignatureValidator extends EllipticCurveProvider imple
     private static final String EC_PUBLIC_KEY_REQD_MSG =
         "Elliptic Curve signature validation requires an ECPublicKey instance.";
 
-    public EllipticCurveSignatureValidator(SignatureAlgorithm alg, Key key) {
+    public EllipticCurveSignatureValidator(SignatureAlgorithmName alg, Key key) {
         super(alg, key);
         Assert.isTrue(key instanceof ECPublicKey, EC_PUBLIC_KEY_REQD_MSG);
     }

@@ -17,7 +17,7 @@ package io.jsonwebtoken.impl
 
 import io.jsonwebtoken.JwsHeader
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import io.jsonwebtoken.impl.crypto.MacProvider
 import org.junit.Test
 import static org.junit.Assert.*
@@ -39,7 +39,7 @@ class DefaultJwsTest {
     void testToString() {
         //create random signing key for testing:
         byte[] key = MacProvider.generateKey().encoded
-        String compact = Jwts.builder().claim('foo', 'bar').signWith(SignatureAlgorithm.HS256, key).compact();
+        String compact = Jwts.builder().claim('foo', 'bar').signWith(SignatureAlgorithmName.HS256, key).compact();
         int i = compact.lastIndexOf('.')
         String signature = compact.substring(i + 1)
         def jws = Jwts.parser().setSigningKey(key).parseClaimsJws(compact)

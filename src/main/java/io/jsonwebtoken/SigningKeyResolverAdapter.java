@@ -42,7 +42,7 @@ public class SigningKeyResolverAdapter implements SigningKeyResolver {
 
     @Override
     public Key resolveSigningKey(JwsHeader header, Claims claims) {
-        SignatureAlgorithm alg = SignatureAlgorithm.forName(header.getAlgorithm());
+        SignatureAlgorithmName alg = SignatureAlgorithmName.forName(header.getAlgorithm());
         Assert.isTrue(alg.isHmac(), "The default resolveSigningKey(JwsHeader, Claims) implementation cannot be " +
                                     "used for asymmetric key algorithms (RSA, Elliptic Curve).  " +
                                     "Override the resolveSigningKey(JwsHeader, Claims) method instead and return a " +
@@ -53,7 +53,7 @@ public class SigningKeyResolverAdapter implements SigningKeyResolver {
 
     @Override
     public Key resolveSigningKey(JwsHeader header, String plaintext) {
-        SignatureAlgorithm alg = SignatureAlgorithm.forName(header.getAlgorithm());
+        SignatureAlgorithmName alg = SignatureAlgorithmName.forName(header.getAlgorithm());
         Assert.isTrue(alg.isHmac(), "The default resolveSigningKey(JwsHeader, String) implementation cannot be " +
                                     "used for asymmetric key algorithms (RSA, Elliptic Curve).  " +
                                     "Override the resolveSigningKey(JwsHeader, String) method instead and return a " +

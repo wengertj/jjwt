@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto;
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.impl.TextCodec;
 import io.jsonwebtoken.lang.Assert;
 
@@ -28,11 +28,11 @@ public class DefaultJwtSigner implements JwtSigner {
 
     private final Signer signer;
 
-    public DefaultJwtSigner(SignatureAlgorithm alg, Key key) {
+    public DefaultJwtSigner(SignatureAlgorithmName alg, Key key) {
         this(DefaultSignerFactory.INSTANCE, alg, key);
     }
 
-    public DefaultJwtSigner(SignerFactory factory, SignatureAlgorithm alg, Key key) {
+    public DefaultJwtSigner(SignerFactory factory, SignatureAlgorithmName alg, Key key) {
         Assert.notNull(factory, "SignerFactory argument cannot be null.");
         this.signer = factory.createSigner(alg, key);
     }

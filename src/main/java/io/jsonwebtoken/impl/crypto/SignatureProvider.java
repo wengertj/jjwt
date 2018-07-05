@@ -20,7 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.Signature;
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.lang.Assert;
 import io.jsonwebtoken.lang.RuntimeEnvironment;
@@ -47,11 +47,11 @@ abstract class SignatureProvider {
         DEFAULT_SECURE_RANDOM.nextBytes(new byte[64]);
     }
 
-    protected final SignatureAlgorithm alg;
+    protected final SignatureAlgorithmName alg;
     protected final Key key;
 
-    protected SignatureProvider(SignatureAlgorithm alg, Key key) {
-        Assert.notNull(alg, "SignatureAlgorithm cannot be null.");
+    protected SignatureProvider(SignatureAlgorithmName alg, Key key) {
+        Assert.notNull(alg, "SignatureAlgorithmName cannot be null.");
         Assert.notNull(key, "Key cannot be null.");
         this.alg = alg;
         this.key = key;

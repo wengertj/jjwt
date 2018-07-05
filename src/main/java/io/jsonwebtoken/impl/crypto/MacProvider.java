@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto;
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.lang.Assert;
 
 import javax.crypto.SecretKey;
@@ -25,46 +25,46 @@ import java.security.SecureRandom;
 
 public abstract class MacProvider extends SignatureProvider {
 
-    protected MacProvider(SignatureAlgorithm alg, Key key) {
+    protected MacProvider(SignatureAlgorithmName alg, Key key) {
         super(alg, key);
-        Assert.isTrue(alg.isHmac(), "SignatureAlgorithm must be a HMAC SHA algorithm.");
+        Assert.isTrue(alg.isHmac(), "SignatureAlgorithmName must be a HMAC SHA algorithm.");
     }
 
     /**
      * Generates a new secure-random 512 bit secret key suitable for creating and verifying HMAC signatures.  This is a
-     * convenience method that immediately delegates to {@link #generateKey(SignatureAlgorithm)} using {@link
-     * SignatureAlgorithm#HS512} as the method argument.
+     * convenience method that immediately delegates to {@link #generateKey(SignatureAlgorithmName)} using {@link
+     * SignatureAlgorithmName#HS512} as the method argument.
      *
      * @return a new secure-random 512 bit secret key suitable for creating and verifying HMAC signatures.
-     * @see #generateKey(SignatureAlgorithm)
-     * @see #generateKey(SignatureAlgorithm, SecureRandom)
+     * @see #generateKey(SignatureAlgorithmName)
+     * @see #generateKey(SignatureAlgorithmName, SecureRandom)
      * @since 0.5
      */
     public static SecretKey generateKey() {
-        return generateKey(SignatureAlgorithm.HS512);
+        return generateKey(SignatureAlgorithmName.HS512);
     }
 
     /**
      * Generates a new secure-random secret key of a length suitable for creating and verifying HMAC signatures
-     * according to the specified {@code SignatureAlgorithm} using JJWT's default {@link
+     * according to the specified {@code SignatureAlgorithmName} using JJWT's default {@link
      * SignatureProvider#DEFAULT_SECURE_RANDOM SecureRandom instance}.  This is a convenience method that immediately
-     * delegates to {@link #generateKey(SignatureAlgorithm, SecureRandom)}.
+     * delegates to {@link #generateKey(SignatureAlgorithmName, SecureRandom)}.
      *
      * @param alg the desired signature algorithm
      * @return a new secure-random secret key of a length suitable for creating and verifying HMAC signatures according
-     * to the specified {@code SignatureAlgorithm} using JJWT's default {@link SignatureProvider#DEFAULT_SECURE_RANDOM
+     * to the specified {@code SignatureAlgorithmName} using JJWT's default {@link SignatureProvider#DEFAULT_SECURE_RANDOM
      * SecureRandom instance}.
      * @see #generateKey()
-     * @see #generateKey(SignatureAlgorithm, SecureRandom)
+     * @see #generateKey(SignatureAlgorithmName, SecureRandom)
      * @since 0.5
      */
-    public static SecretKey generateKey(SignatureAlgorithm alg) {
+    public static SecretKey generateKey(SignatureAlgorithmName alg) {
         return generateKey(alg, SignatureProvider.DEFAULT_SECURE_RANDOM);
     }
 
     /**
      * Generates a new secure-random secret key of a length suitable for creating and verifying HMAC signatures
-     * according to the specified {@code SignatureAlgorithm} using the specified SecureRandom number generator.  This
+     * according to the specified {@code SignatureAlgorithmName} using the specified SecureRandom number generator.  This
      * implementation returns secure-random key sizes as follows:
      *
      * <table> <caption>Key Sizes</caption> <thead> <tr> <th>Signature Algorithm</th> <th>Generated Key Size</th> </tr> </thead> <tbody> <tr>
@@ -74,14 +74,14 @@ public abstract class MacProvider extends SignatureProvider {
      * @param alg    the signature algorithm that will be used with the generated key
      * @param random the secure random number generator used during key generation
      * @return a new secure-random secret key of a length suitable for creating and verifying HMAC signatures according
-     * to the specified {@code SignatureAlgorithm} using the specified SecureRandom number generator.
+     * to the specified {@code SignatureAlgorithmName} using the specified SecureRandom number generator.
      * @see #generateKey()
-     * @see #generateKey(SignatureAlgorithm)
+     * @see #generateKey(SignatureAlgorithmName)
      * @since 0.5
      */
-    public static SecretKey generateKey(SignatureAlgorithm alg, SecureRandom random) {
+    public static SecretKey generateKey(SignatureAlgorithmName alg, SecureRandom random) {
 
-        Assert.isTrue(alg.isHmac(), "SignatureAlgorithm argument must represent an HMAC algorithm.");
+        Assert.isTrue(alg.isHmac(), "SignatureAlgorithmName argument must represent an HMAC algorithm.");
 
         byte[] bytes;
 

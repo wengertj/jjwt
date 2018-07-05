@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto;
 
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.lang.Assert;
 
@@ -28,11 +28,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class MacSigner extends MacProvider implements Signer {
 
-    public MacSigner(SignatureAlgorithm alg, byte[] key) {
+    public MacSigner(SignatureAlgorithmName alg, byte[] key) {
         this(alg, new SecretKeySpec(key, alg.getJcaName()));
     }
 
-    public MacSigner(SignatureAlgorithm alg, Key key) {
+    public MacSigner(SignatureAlgorithmName alg, Key key) {
         super(alg, key);
         Assert.isTrue(alg.isHmac(), "The MacSigner only supports HMAC signature algorithms.");
         if (!(key instanceof SecretKey)) {

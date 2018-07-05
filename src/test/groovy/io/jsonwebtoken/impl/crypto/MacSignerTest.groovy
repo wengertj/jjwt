@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto
 
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import io.jsonwebtoken.SignatureException
 import org.junit.Test
 import static org.junit.Assert.*
@@ -35,7 +35,7 @@ class MacSignerTest {
         rng.nextBytes(key);
         rng.nextBytes(data);
 
-        def s = new MacSigner(SignatureAlgorithm.HS256, key) {
+        def s = new MacSigner(SignatureAlgorithmName.HS256, key) {
             @Override
             protected Mac doGetMacInstance() throws NoSuchAlgorithmException, InvalidKeyException {
                 throw new NoSuchAlgorithmException("foo");
@@ -57,7 +57,7 @@ class MacSignerTest {
         rng.nextBytes(key);
         rng.nextBytes(data);
 
-        def s = new MacSigner(SignatureAlgorithm.HS256, key) {
+        def s = new MacSigner(SignatureAlgorithmName.HS256, key) {
             @Override
             protected Mac doGetMacInstance() throws NoSuchAlgorithmException, InvalidKeyException {
                 throw new InvalidKeyException("foo");

@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto
 
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import io.jsonwebtoken.SignatureException
 
 import java.security.NoSuchAlgorithmException
@@ -29,7 +29,7 @@ class SignatureProviderTest {
     @Test
     void testCreateSignatureInstanceNoSuchAlgorithm() {
 
-        def p = new SignatureProvider(SignatureAlgorithm.HS256, MacProvider.generateKey()) {
+        def p = new SignatureProvider(SignatureAlgorithmName.HS256, MacProvider.generateKey()) {
             @Override
             protected Signature getSignatureInstance() throws NoSuchAlgorithmException {
                 throw new NoSuchAlgorithmException('foo')
@@ -47,7 +47,7 @@ class SignatureProviderTest {
     @Test
     void testCreateSignatureInstanceNoSuchAlgorithmNonStandardAlgorithm() {
 
-        def p = new SignatureProvider(SignatureAlgorithm.ES512, EllipticCurveProvider.generateKeyPair().getPublic()) {
+        def p = new SignatureProvider(SignatureAlgorithmName.ES512, EllipticCurveProvider.generateKeyPair().getPublic()) {
             @Override
             protected Signature getSignatureInstance() throws NoSuchAlgorithmException {
                 throw new NoSuchAlgorithmException('foo')
@@ -65,7 +65,7 @@ class SignatureProviderTest {
     @Test
     void testCreateSignatureInstanceNoSuchAlgorithmNonStandardAlgorithmWithoutBouncyCastle() {
 
-        def p = new SignatureProvider(SignatureAlgorithm.ES512, EllipticCurveProvider.generateKeyPair().getPublic()) {
+        def p = new SignatureProvider(SignatureAlgorithmName.ES512, EllipticCurveProvider.generateKeyPair().getPublic()) {
             @Override
             protected Signature getSignatureInstance() throws NoSuchAlgorithmException {
                 throw new NoSuchAlgorithmException('foo')

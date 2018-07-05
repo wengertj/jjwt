@@ -25,7 +25,6 @@ import io.jsonwebtoken.impl.compression.GzipCompressionCodec
 import io.jsonwebtoken.impl.crypto.EllipticCurveProvider
 import io.jsonwebtoken.impl.crypto.MacProvider
 import io.jsonwebtoken.impl.crypto.RsaProvider
-import io.jsonwebtoken.lang.Strings
 import org.junit.Test
 
 import javax.crypto.Mac
@@ -342,7 +341,7 @@ class JwtsTest {
 
         String id = UUID.randomUUID().toString()
 
-        String compact = Jwts.builder().setId(id).setAudience("an audience").signWith(SignatureAlgorithm.HS256, key)
+        String compact = Jwts.builder().setId(id).setAudience("an audience").signWith(SignatureAlgorithmName.HS256, key)
                 .claim("state", "hello this is an amazing jwt").compact()
 
         def jws = Jwts.parser().setSigningKey(key).parseClaimsJws(compact)
@@ -363,7 +362,7 @@ class JwtsTest {
 
         String id = UUID.randomUUID().toString()
 
-        String compact = Jwts.builder().setId(id).setAudience("an audience").signWith(SignatureAlgorithm.HS256, key)
+        String compact = Jwts.builder().setId(id).setAudience("an audience").signWith(SignatureAlgorithmName.HS256, key)
                 .claim("state", "hello this is an amazing jwt").compressWith(CompressionCodecs.DEFLATE).compact()
 
         def jws = Jwts.parser().setSigningKey(key).parseClaimsJws(compact)
@@ -384,7 +383,7 @@ class JwtsTest {
 
         String id = UUID.randomUUID().toString()
 
-        String compact = Jwts.builder().setId(id).setAudience("an audience").signWith(SignatureAlgorithm.HS256, key)
+        String compact = Jwts.builder().setId(id).setAudience("an audience").signWith(SignatureAlgorithmName.HS256, key)
                 .claim("state", "hello this is an amazing jwt").compressWith(CompressionCodecs.GZIP).compact()
 
         def jws = Jwts.parser().setSigningKey(key).parseClaimsJws(compact)
@@ -404,7 +403,7 @@ class JwtsTest {
 
         String id = UUID.randomUUID().toString()
 
-        String compact = Jwts.builder().setId(id).setAudience("an audience").signWith(SignatureAlgorithm.HS256, key)
+        String compact = Jwts.builder().setId(id).setAudience("an audience").signWith(SignatureAlgorithmName.HS256, key)
                 .claim("state", "hello this is an amazing jwt").compressWith(new GzipCompressionCodec() {
             @Override
             String getAlgorithmName() {
@@ -439,7 +438,7 @@ class JwtsTest {
 
         String id = UUID.randomUUID().toString()
 
-        String compact = Jwts.builder().setId(id).setAudience("an audience").signWith(SignatureAlgorithm.HS256, key)
+        String compact = Jwts.builder().setId(id).setAudience("an audience").signWith(SignatureAlgorithmName.HS256, key)
                 .claim("state", "hello this is an amazing jwt").compressWith(new GzipCompressionCodec() {
             @Override
             String getAlgorithmName() {
@@ -457,7 +456,7 @@ class JwtsTest {
 
         String payload = "this is my test for a payload"
 
-        String compact = Jwts.builder().setPayload(payload).signWith(SignatureAlgorithm.HS256, key)
+        String compact = Jwts.builder().setPayload(payload).signWith(SignatureAlgorithmName.HS256, key)
                 .compressWith(CompressionCodecs.DEFLATE).compact()
 
         def jws = Jwts.parser().setSigningKey(key).parsePlaintextJws(compact)
@@ -471,83 +470,83 @@ class JwtsTest {
 
     @Test
     void testHS256() {
-        testHmac(SignatureAlgorithm.HS256);
+        testHmac(SignatureAlgorithmName.HS256);
     }
 
     @Test
     void testHS384() {
-        testHmac(SignatureAlgorithm.HS384);
+        testHmac(SignatureAlgorithmName.HS384);
     }
 
     @Test
     void testHS512() {
-        testHmac(SignatureAlgorithm.HS512);
+        testHmac(SignatureAlgorithmName.HS512);
     }
 
     @Test
     void testRS256() {
-        testRsa(SignatureAlgorithm.RS256);
+        testRsa(SignatureAlgorithmName.RS256);
     }
 
     @Test
     void testRS384() {
-        testRsa(SignatureAlgorithm.RS384);
+        testRsa(SignatureAlgorithmName.RS384);
     }
 
     @Test
     void testRS512() {
-        testRsa(SignatureAlgorithm.RS512);
+        testRsa(SignatureAlgorithmName.RS512);
     }
 
     @Test
     void testPS256() {
-        testRsa(SignatureAlgorithm.PS256);
+        testRsa(SignatureAlgorithmName.PS256);
     }
 
     @Test
     void testPS384() {
-        testRsa(SignatureAlgorithm.PS384);
+        testRsa(SignatureAlgorithmName.PS384);
     }
 
     @Test
     void testPS512() {
-        testRsa(SignatureAlgorithm.PS512, 2048, false);
+        testRsa(SignatureAlgorithmName.PS512, 2048, false);
     }
 
     @Test
     void testRSA256WithPrivateKeyValidation() {
-        testRsa(SignatureAlgorithm.RS256, 1024, true);
+        testRsa(SignatureAlgorithmName.RS256, 1024, true);
     }
 
     @Test
     void testRSA384WithPrivateKeyValidation() {
-        testRsa(SignatureAlgorithm.RS384, 1024, true);
+        testRsa(SignatureAlgorithmName.RS384, 1024, true);
     }
 
     @Test
     void testRSA512WithPrivateKeyValidation() {
-        testRsa(SignatureAlgorithm.RS512, 1024, true);
+        testRsa(SignatureAlgorithmName.RS512, 1024, true);
     }
 
     @Test
     void testES256() {
-        testEC(SignatureAlgorithm.ES256)
+        testEC(SignatureAlgorithmName.ES256)
     }
 
     @Test
     void testES384() {
-        testEC(SignatureAlgorithm.ES384)
+        testEC(SignatureAlgorithmName.ES384)
     }
 
     @Test
     void testES512() {
-        testEC(SignatureAlgorithm.ES512)
+        testEC(SignatureAlgorithmName.ES512)
     }
 
     @Test
     void testES256WithPrivateKeyValidation() {
         try {
-            testEC(SignatureAlgorithm.ES256, true)
+            testEC(SignatureAlgorithmName.ES256, true)
             fail("EC private keys cannot be used to validate EC signatures.")
         } catch (UnsupportedJwtException e) {
             assertEquals e.cause.message, "Elliptic Curve signature validation requires an ECPublicKey instance."
@@ -579,7 +578,7 @@ class JwtsTest {
         byte[] key = MacProvider.generateKey().getEncoded()
 
         //this is a 'real', valid JWT:
-        String compact = Jwts.builder().setSubject("Joe").signWith(SignatureAlgorithm.HS256, key).compact();
+        String compact = Jwts.builder().setSubject("Joe").signWith(SignatureAlgorithmName.HS256, key).compact();
 
         //Now strip off the signature so we can add it back in later on a forged token:
         int i = compact.lastIndexOf('.');
@@ -702,7 +701,7 @@ class JwtsTest {
         }
     }
 
-    static void testRsa(SignatureAlgorithm alg, int keySize=1024, boolean verifyWithPrivateKey=false) {
+    static void testRsa(SignatureAlgorithmName alg, int keySize=1024, boolean verifyWithPrivateKey=false) {
 
         KeyPair kp = RsaProvider.generateKeyPair(keySize)
         PublicKey publicKey = kp.getPublic();
@@ -724,7 +723,7 @@ class JwtsTest {
         assert token.body == claims
     }
 
-    static void testHmac(SignatureAlgorithm alg) {
+    static void testHmac(SignatureAlgorithmName alg) {
         //create random signing key for testing:
         byte[] key = MacProvider.generateKey().encoded
 
@@ -739,7 +738,7 @@ class JwtsTest {
         assert token.body == claims
     }
 
-    static void testEC(SignatureAlgorithm alg, boolean verifyWithPrivateKey=false) {
+    static void testEC(SignatureAlgorithmName alg, boolean verifyWithPrivateKey=false) {
 
         KeyPair pair = EllipticCurveProvider.generateKeyPair(alg)
         PublicKey publicKey = pair.getPublic()

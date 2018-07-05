@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto
 
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import org.junit.Test
 import static org.junit.Assert.*
 
@@ -29,19 +29,19 @@ class MacProviderTest {
 
     @Test
     void testHS256() {
-        byte[] bytes = MacProvider.generateKey(SignatureAlgorithm.HS256).encoded
+        byte[] bytes = MacProvider.generateKey(SignatureAlgorithmName.HS256).encoded
         assertEquals 32, bytes.length
     }
 
     @Test
     void testHS384() {
-        byte[] bytes = MacProvider.generateKey(SignatureAlgorithm.HS384).encoded
+        byte[] bytes = MacProvider.generateKey(SignatureAlgorithmName.HS384).encoded
         assertEquals 48, bytes.length
     }
 
     @Test
     void testHS512() {
-        byte[] bytes = MacProvider.generateKey(SignatureAlgorithm.HS512).encoded
+        byte[] bytes = MacProvider.generateKey(SignatureAlgorithmName.HS512).encoded
         assertEquals 64, bytes.length
     }
 }

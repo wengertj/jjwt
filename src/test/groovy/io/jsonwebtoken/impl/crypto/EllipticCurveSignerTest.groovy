@@ -16,7 +16,7 @@
 package io.jsonwebtoken.impl.crypto
 
 import io.jsonwebtoken.JwtException
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import io.jsonwebtoken.SignatureException
 import org.junit.Test
 
@@ -32,10 +32,10 @@ class EllipticCurveSignerTest {
     @Test
     void testConstructorWithoutECAlg() {
         try {
-            new EllipticCurveSigner(SignatureAlgorithm.HS256, MacProvider.generateKey());
+            new EllipticCurveSigner(SignatureAlgorithmName.HS256, MacProvider.generateKey());
             fail('EllipticCurveSigner should reject non ECPrivateKeys');
         } catch (IllegalArgumentException expected) {
-            assertEquals expected.message, 'SignatureAlgorithm must be an Elliptic Curve algorithm.';
+            assertEquals expected.message, 'SignatureAlgorithmName must be an Elliptic Curve algorithm.';
         }
     }
 
@@ -43,7 +43,7 @@ class EllipticCurveSignerTest {
     void testConstructorWithoutECPrivateKey() {
         def key = MacProvider.generateKey()
         try {
-            new EllipticCurveSigner(SignatureAlgorithm.ES256, key);
+            new EllipticCurveSigner(SignatureAlgorithmName.ES256, key);
             fail('EllipticCurveSigner should reject non ECPrivateKey instances.')
         } catch (IllegalArgumentException expected) {
             assertEquals expected.message, "Elliptic Curve signatures must be computed using an EC PrivateKey.  The specified key of " +
@@ -61,7 +61,7 @@ class EllipticCurveSignerTest {
         String msg = 'foo'
         final InvalidKeyException ex = new InvalidKeyException(msg)
 
-        def signer = new EllipticCurveSigner(SignatureAlgorithm.ES256, privateKey) {
+        def signer = new EllipticCurveSigner(SignatureAlgorithmName.ES256, privateKey) {
             @Override
             protected byte[] doSign(byte[] data) throws InvalidKeyException, java.security.SignatureException {
                 throw ex
@@ -90,7 +90,7 @@ class EllipticCurveSignerTest {
         String msg = 'foo'
         final JwtException ex = new JwtException(msg)
 
-        def signer = new EllipticCurveSigner(SignatureAlgorithm.ES256, privateKey) {
+        def signer = new EllipticCurveSigner(SignatureAlgorithmName.ES256, privateKey) {
             @Override
             protected byte[] doSign(byte[] data) throws InvalidKeyException, java.security.SignatureException, JwtException {
                 throw ex
@@ -119,7 +119,7 @@ class EllipticCurveSignerTest {
         String msg = 'foo'
         final java.security.SignatureException ex = new java.security.SignatureException(msg)
 
-        def signer = new EllipticCurveSigner(SignatureAlgorithm.ES256, privateKey) {
+        def signer = new EllipticCurveSigner(SignatureAlgorithmName.ES256, privateKey) {
             @Override
             protected byte[] doSign(byte[] data) throws InvalidKeyException, java.security.SignatureException {
                 throw ex

@@ -34,7 +34,7 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.MissingClaimException;
 import io.jsonwebtoken.PrematureJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithmName;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.SigningKeyResolver;
 import io.jsonwebtoken.UnsupportedJwtException;
@@ -281,16 +281,16 @@ public class DefaultJwtParser implements JwtParser {
 
             JwsHeader jwsHeader = (JwsHeader) header;
 
-            SignatureAlgorithm algorithm = null;
+            SignatureAlgorithmName algorithm = null;
 
             if (header != null) {
                 String alg = jwsHeader.getAlgorithm();
                 if (Strings.hasText(alg)) {
-                    algorithm = SignatureAlgorithm.forName(alg);
+                    algorithm = SignatureAlgorithmName.forName(alg);
                 }
             }
 
-            if (algorithm == null || algorithm == SignatureAlgorithm.NONE) {
+            if (algorithm == null || algorithm == SignatureAlgorithmName.NONE) {
                 //it is plaintext, but it has a signature.  This is invalid:
                 String msg = "JWT string has a digest/signature, but the header does not reference a valid signature " +
                              "algorithm.";
@@ -468,7 +468,7 @@ public class DefaultJwtParser implements JwtParser {
     /*
      * @since 0.5 mostly to allow testing overrides
      */
-    protected JwtSignatureValidator createSignatureValidator(SignatureAlgorithm alg, Key key) {
+    protected JwtSignatureValidator createSignatureValidator(SignatureAlgorithmName alg, Key key) {
         return new DefaultJwtSignatureValidator(alg, key);
     }
 

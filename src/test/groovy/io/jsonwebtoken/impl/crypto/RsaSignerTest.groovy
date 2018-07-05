@@ -15,7 +15,7 @@
  */
 package io.jsonwebtoken.impl.crypto
 
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.SignatureAlgorithmName
 import io.jsonwebtoken.SignatureException
 
 import javax.crypto.spec.SecretKeySpec
@@ -41,10 +41,10 @@ class RsaSignerTest {
         SecretKeySpec key = new SecretKeySpec(bytes, 'HmacSHA256')
 
         try {
-            new RsaSigner(SignatureAlgorithm.HS256, key);
+            new RsaSigner(SignatureAlgorithmName.HS256, key);
             fail('RsaSigner should reject non RSA algorithms.')
         } catch (IllegalArgumentException expected) {
-            assertEquals expected.message, 'SignatureAlgorithm must be an RSASSA or RSASSA-PSS algorithm.';
+            assertEquals expected.message, 'SignatureAlgorithmName must be an RSASSA or RSASSA-PSS algorithm.';
         }
     }
 
@@ -57,7 +57,7 @@ class RsaSignerTest {
 
         try {
             //noinspection GroovyResultOfObjectAllocationIgnored
-            new RsaSigner(SignatureAlgorithm.RS256, key);
+            new RsaSigner(SignatureAlgorithmName.RS256, key);
             fail('RsaSigner should reject non RSAPrivateKey instances.')
         } catch (IllegalArgumentException expected) {
             assertEquals expected.message, "RSA signatures must be computed using an RSA PrivateKey.  The specified key of type " +
@@ -88,7 +88,7 @@ class RsaSignerTest {
 
         try {
             //noinspection GroovyResultOfObjectAllocationIgnored
-            new RsaSigner(SignatureAlgorithm.RS256, key);
+            new RsaSigner(SignatureAlgorithmName.RS256, key);
             fail('RsaSigner should reject non RSAPrivateKey instances.')
         } catch (IllegalArgumentException expected) {
             assertEquals expected.message, "RSA signatures must be computed using an RSA PrivateKey.  The specified key of type " +
@@ -109,7 +109,7 @@ class RsaSignerTest {
         String msg = 'foo'
         final InvalidKeyException ex = new InvalidKeyException(msg)
 
-        RsaSigner signer = new RsaSigner(SignatureAlgorithm.RS256, privateKey) {
+        RsaSigner signer = new RsaSigner(SignatureAlgorithmName.RS256, privateKey) {
             @Override
             protected byte[] doSign(byte[] data) throws InvalidKeyException, java.security.SignatureException {
                 throw ex
@@ -141,7 +141,7 @@ class RsaSignerTest {
         String msg = 'foo'
         final java.security.SignatureException ex = new java.security.SignatureException(msg)
 
-        RsaSigner signer = new RsaSigner(SignatureAlgorithm.RS256, privateKey) {
+        RsaSigner signer = new RsaSigner(SignatureAlgorithmName.RS256, privateKey) {
             @Override
             protected byte[] doSign(byte[] data) throws InvalidKeyException, java.security.SignatureException {
                 throw ex
@@ -172,7 +172,7 @@ class RsaSignerTest {
         byte[] bytes = new byte[16]
         rng.nextBytes(bytes)
 
-        RsaSigner signer = new RsaSigner(SignatureAlgorithm.RS256, privateKey);
+        RsaSigner signer = new RsaSigner(SignatureAlgorithmName.RS256, privateKey);
         byte[] out1 = signer.sign(bytes)
 
         byte[] out2 = signer.sign(bytes)
