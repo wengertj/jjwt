@@ -42,8 +42,7 @@ class EncryptionAlgorithmsTest {
 
             assert alg instanceof AbstractAesEncryptionAlgorithm
 
-            def skey = alg.generateKey()
-            def key = skey.getEncoded()
+            def key = alg.generateKey()
 
             def request = EncryptionRequests.symmetric().setKey(key).setPlaintext(PLAINTEXT_BYTES).build()
 
@@ -79,8 +78,7 @@ class EncryptionAlgorithmsTest {
 
             assert alg instanceof AbstractAesEncryptionAlgorithm
 
-            def skey = alg.generateKey()
-            def key = skey.getEncoded()
+            def key = alg.generateKey()
 
             def request = EncryptionRequests.symmetric()
                     .setAdditionalAuthenticatedData(AAD_BYTES)
